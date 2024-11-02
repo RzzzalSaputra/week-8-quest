@@ -5,11 +5,9 @@ const errorName = {
 
 const errorMsg = {
   WRONG_INPUT: "Wrong input",
-  USER_NOT_FOUND: "User Not found",
+  BORROWERS_NOT_FOUND: "User Not found",
+  AUTHOR_NOT_FOUND: "Author Not found",
   EMPETY_INPUT: "Input Cant Be Empty",
 };
 
-module.exports = {
-  errorMsg,
-  errorName,
-};
+export { errorName, errorMsg };

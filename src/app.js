@@ -9,6 +9,7 @@ const port = process.env.PORT
 
 connectDB()
 
+app.use(express.static('/public/upload'))
 app.use(express.json());
 
 app.use("/api/v1",routes)
