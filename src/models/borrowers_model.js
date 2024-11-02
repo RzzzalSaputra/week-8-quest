@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
-    userName:{
+    borrowersName:{
         type: String,
         required: true
     },
@@ -21,10 +21,6 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    is_Admin:{
-        type: Boolean,
-        default: false
-    },
     createAt:{
         type: Date,
         default: Date.now
@@ -39,6 +35,6 @@ const schema = new mongoose.Schema({
     }
 })
 
-const userModel = mongoose.model('User',schema)
+const borrowersModel = mongoose.model('borrowers',schema)
 
-module.exports = userModel;
+module.exports = borrowersModel;
