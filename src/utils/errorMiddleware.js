@@ -5,6 +5,7 @@ const errorName = {
 
 const errorMsg = {
   WRONG_INPUT: "Wrong Input",
+  STOCK_NOT_FOUND: "Stock Not Found",
   BORROW_NOT_FOUND: "Borrow Not Found",
   CATEGORY_NOT_FOUND: "Category Not Found",
   BORROWERS_NOT_FOUND: "Borrowers Not Found",
