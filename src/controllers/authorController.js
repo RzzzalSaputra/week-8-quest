@@ -33,7 +33,7 @@ authorController.read = async (req, res, next) => {
     try {
         // Search author if deleteAt = null
         const author = await authorModel.find({deleteAt: null});
-        console.log(author)
+        
         res.status(200).json(author.map(author => ({
             _id: author._id,
             name: author.name
