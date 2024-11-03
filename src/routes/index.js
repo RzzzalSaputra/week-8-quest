@@ -9,15 +9,17 @@ const categoryRoutes = require("./category_routes")
 const bookRoutes = require("./book_routes")
 const borrowRoutes = require("./borrow_routes")
 
-
-//use cors
-routes.use(cors())
 // kumpulkan semua routes disini per bagian ex : /author,/books dll
+routes.use(cors())
 routes.use(borrowRoutes)
 routes.use(bookRoutes)
 routes.use(categoryRoutes)
 routes.use(authorRoutes)
 routes.use(borrowersRoutes)
 routes.use(errorHandling);
+
+routes.all('*', (req,res)=>{
+    res.status(404).send('Page not found')
+})
 
 module.exports = routes
