@@ -36,7 +36,7 @@ bookController.read = async (req, res, next) => {
     try {
         // Search book if deleteAt = null
         const book = await bookModel.find({deleteAt: null});
-        console.log(book)
+        
         res.status(200).json(book.map(book => ({
             _id: book._id,
             title: book.title
