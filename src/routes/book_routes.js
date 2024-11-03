@@ -6,7 +6,7 @@ const {checkCategory} = require('../middleware/checkCategory')
 
 const bookRoutes = express.Router()
 
-bookRoutes.post("/book", bookController.create)
+bookRoutes.post("/book", checkAuthor, checkCategory, bookController.create)
 bookRoutes.get("/book", bookController.read)
 bookRoutes.put("/book/:id", checkAuthor, checkCategory, bookController.update)
 bookRoutes.delete("/book/:id", bookController.delete)
