@@ -1,4 +1,5 @@
 const borrowModel = require("../models/borrow");
+const stockModel = require("../models/stock_model");
 const { errorMsg, errorName } = require("../utils/errorMiddleware");
 
 const borrowController = {};
@@ -13,6 +14,16 @@ borrowController.create = async (req, res, next) => {
     try {
         const { borrowers, book} = req.body;
 
+        const stock = await stockModel.findOne({book: book, deleteAt: null});
+
+        if(!stock){
+            throw { name: errorName.NOT_FOUND, message: errorMsg.STOCK_NOT_FOUND };
+        }
+
+        if(stock.quantity <= 0){
+            throw { name: errorName.NOT_FOUND, message: errorMsg.STOCK_NOT_ENOUGH };
+        }
+
         // Check required 
         if (!borrowers || !book) {
           throw { name: errorName.BAD_REQUEST, message: errorMsg.EMPETY_INPUT };
@@ -24,7 +35,12 @@ borrowController.create = async (req, res, next) => {
             book
         });
 
-        // Save borrow
+        // Update stock
+        stock.quantity -= 1;
+        stock.logs.push(`Borrowed on ${new Date().toLocaleDateString()}, Quantity -1`);
+        
+        // Save borrow and stock
+        await stock.save();
         await borrow.save();
         res.status(201).json(borrow);
     } catch (error) {
@@ -57,13 +73,19 @@ borrowController.createBookReturn = async (req, res, next) => {
         const { borrowers, book} = req.body;
         const borrow = await borrowModel.findOne({borrowers: borrowers,book: book, deleteAt: null })
 
+        const stock = await stockModel.findOne({book: book, deleteAt: null});
+        stock.quantity += 1;
+        stock.logs.push(`Returned on ${new Date().toLocaleDateString()}, Quantity +1`);
+
+        
         if (!borrow) {
             throw { name: errorName.NOT_FOUND, message: errorMsg.BORROW_NOT_FOUND };
         }
         
         const createAt = borrow.createAt;
         const updatedBorrow = await borrowModel.findOneAndUpdate({ _id: borrow._id },{ returnAt: new Date(),updateAt: new Date(), lateFee: countfee(createAt) },{ new: true });
-
+        
+        await stock.save();
         res.status(200).json(borrow);
     } catch (error) {
        next(error);

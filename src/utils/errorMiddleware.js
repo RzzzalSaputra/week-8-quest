@@ -12,6 +12,7 @@ const errorMsg = {
   AUTHOR_NOT_FOUND: "Author Not Found",
   BOOK_NOT_FOUND: "Book Not Found",
   EMPETY_INPUT: "Input Cant Be Empty",
+  STOCK_NOT_ENOUGH: "Out of Stock",
 };
 
 export { errorName, errorMsg };
