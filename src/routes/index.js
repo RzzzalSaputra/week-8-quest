@@ -8,8 +8,10 @@ const categoryRoutes = require("./category_routes")
 const bookRoutes = require("./book_routes")
 const borrowRoutes = require("./borrow_routes")
 const stockRoutes = require("./stock_routes")
+const testRoutes = require("./test_routes")
 
 // kumpulkan semua routes disini per bagian ex : /author,/books dll
+routes.use(testRoutes)
 routes.use(stockRoutes)
 routes.use(borrowRoutes)
 routes.use(bookRoutes)
