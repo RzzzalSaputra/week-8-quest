@@ -42,8 +42,13 @@ stockController.read = async (req, res, next) => {
 stockController.update = async (req, res, next) => {
     try {
         const { book, quantity} = req.body;
+        
         const check = await stockModel.findOne({_id: req.params.id})
 
+        if(!check){
+            throw { name: errorName.NOT_FOUND, message: errorMsg.STOCK_NOT_FOUND};
+        }
+        
         const quantityNew = Number(quantity) - Number(check.quantity);
         let updateLogs = ``;
         if(quantityNew > 0){
